@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.smart;
+package com.insalyon.user;
 
 import com.google.gson.*;
 import java.io.IOException;
@@ -42,39 +42,27 @@ public class ActionServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String action=request.getParameter("action"); 
-        String lastName,firstName,age,address,pwd,email,sex;
         Connection conn=null;
         switch(action){
             case "connect":
-                email=request.getParameter("email");
-                pwd=request.getParameter("pwd");
-                JsonObject connection=new JsonObject();
-                JsonObject connect=new JsonObject();
                 try {
+                    String email=request.getParameter("email");
+                    String password=request.getParameter("password");
+                    JsonObject connection=new JsonObject();
+                    JsonObject connect=new JsonObject();
                     conn = DBConnection.Connection();
-                    String existance=DBConnection.ExistanceCompte(email,conn);
-                    if(existance.equals("not exist")){
-                        try (PrintWriter out = response.getWriter()) {
-                            Gson gson=new GsonBuilder().setPrettyPrinting().create();
-                            connect.addProperty("connect", "account not exist");
-                            connection.add("connect", connect);
-                            out.println(gson.toJson(connection));
+                    boolean flag=DBConnection.Connect(email, password, conn);
+                    try (PrintWriter out = response.getWriter()) {
+                        Gson gson=new GsonBuilder().setPrettyPrinting().create();
+                        if(flag){
+                            connect.addProperty("connect", "successful");
+                            request.getSession().setAttribute("email", email);
                         }
-                    }
-                    else{
-                        boolean flag=DBConnection.Connect(email, pwd, conn);
-                        try (PrintWriter out = response.getWriter()) {
-                            Gson gson=new GsonBuilder().setPrettyPrinting().create();
-                            if(flag){
-                                connect.addProperty("connect", "successful");
-                                request.getSession().setAttribute("email", email);
-                            }
-                            else{
-                                connect.addProperty("connect", "failed");
-                            }
-                            connection.add("connect", connect);
-                            out.println(gson.toJson(connection));
+                        else{
+                            connect.addProperty("connect", "failed");
                         }
+                        connection.add("connect", connect);
+                        out.println(gson.toJson(connection));
                     }
                 }
                 catch (ClassNotFoundException | SQLException ex) {
@@ -82,34 +70,18 @@ public class ActionServlet extends HttpServlet {
                 }
                 break;
             case "inscription":
-                email=request.getParameter("email");
-                sex=request.getParameter("sex");
-                lastName=request.getParameter("lastName");
-                firstName=request.getParameter("firstName");
-                age=request.getParameter("age");
-                address=request.getParameter("address");
-                pwd=request.getParameter("pwd");
-                JsonObject inscription=new JsonObject();
                 try {
+                    String email=request.getParameter("email");
+                    String pseudo=request.getParameter("pseudo");
+                    String password=request.getParameter("password");
+                    JsonObject inscription=new JsonObject();
                     conn = DBConnection.Connection();
-                    String existance=DBConnection.ExistanceCompte(email, conn);
-                    if(existance.equals("not exist")){
-                        int resultInsert=DBConnection.Insert(conn,email,sex,lastName,firstName,age,address,pwd);
-                        if(resultInsert!=-1){
-                            try (PrintWriter out = response.getWriter()) {
-                                Gson gson=new GsonBuilder().setPrettyPrinting().create();
-                                JsonObject inscrit=new JsonObject();
-                                inscrit.addProperty("inscrit", "true");
-                                inscription.add("inscrit", inscrit);
-                                out.println(gson.toJson(inscription));
-                            }
-                        }
-                    }
-                    else{
+                    int resultInsert=DBConnection.Insert(conn,email,pseudo,password);
+                    if(resultInsert!=-1){
                         try (PrintWriter out = response.getWriter()) {
                             Gson gson=new GsonBuilder().setPrettyPrinting().create();
                             JsonObject inscrit=new JsonObject();
-                            inscrit.addProperty("inscrit", "false");
+                            inscrit.addProperty("inscrit", "true");
                             inscription.add("inscrit", inscrit);
                             out.println(gson.toJson(inscription));
                         }
@@ -119,22 +91,18 @@ public class ActionServlet extends HttpServlet {
                 }
                 break;
             case "profil":
-                String id_email=(String)request.getSession().getAttribute("email");
-                PrintWriter out = response.getWriter();
-                Gson gson=new GsonBuilder().setPrettyPrinting().create();
-                ResultSet rs;
                 try {
+                    String email=(String)request.getSession().getAttribute("email");
+                    PrintWriter out = response.getWriter();
+                    Gson gson=new GsonBuilder().setPrettyPrinting().create();
+                    ResultSet rs;
                     conn = DBConnection.Connection();
-                    rs = DBConnection.SearchCompteWithEmail(id_email, conn);
+                    rs = DBConnection.FindUserWithEmail(email, conn);
                     JsonObject jsonCompte=new JsonObject();
                     while (rs.next()){
-                        jsonCompte.addProperty("email", rs.getString(1));
-                        jsonCompte.addProperty("sex", rs.getString(2));
-                        jsonCompte.addProperty("lastName", rs.getString(3));
-                        jsonCompte.addProperty("firstName", rs.getString(4));
-                        jsonCompte.addProperty("age", rs.getString(5));
-                        jsonCompte.addProperty("address", rs.getString(6));
-                        jsonCompte.addProperty("pwd", rs.getString(7));
+                        jsonCompte.addProperty("id_user", rs.getString(1));
+                        jsonCompte.addProperty("email", rs.getString(2));
+                        jsonCompte.addProperty("pseudo", rs.getString(3));
                     }
                     rs.beforeFirst();
                     JsonObject container=new JsonObject();

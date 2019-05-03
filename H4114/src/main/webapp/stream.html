@@ -1,24 +1,34 @@
-<div>
-<video id="video" width="100%" height="100%" autoplay></video>
-<a id="start" style="position:absolute; left: 0;">Start</a>
-<a id="snap">Snap Photo</a>
-<a id="stream">Start Live Streaming</a>
-<a id="listen">Listen</a>
-<a id="canvas" width="640" height="480"></a>
+
+<script type="text/javascript" src="./js/camera.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<video id="video" width="640" height="480" autoplay></video>
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+<button id="connect">Connect Start</button>
+<button id="connect2">Connect Listen</button>
+<button id="stream">Start Stream</button>
 
 <div id="errorMsg"></div>
 
-</div>
-        
 <script>
-            $('#start').on('click', function () {
-                start();
-                console.log('Camera started');
-            });
-            $('#stream').on('click', function () {
-                stream();
-                console.log('Stream started');
-            });
+    $('#start').on('click', function () {
+        start();
+        console.log('Camera started');
+    });
+    $('#stop').on('click', function () {
+        stop();
+        console.log('Camera stopped');
+    });
+    $('#connect').on('click', function () {
+        connectStart();
+        console.log('Stream started');
+    });
+    $('#connect2').on('click', function () {
+        connectListen();
+        console.log('Listener started');
+    });
+    $('#stream').on('click', function () {
+        stream();
+        console.log('Stream started');
+    });
 </script>
-
-<script type="text/javascript" src="./js/camera.js"></script>
