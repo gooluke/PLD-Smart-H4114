@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Manifest</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="./js/sign-up.js"></script>
+        <script type="text/javascript" src="./js/jquery.serializejson.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="style">
+        <h1>Sign up</h1>
+        <img src="./icons/gorilla.png" style="height: 100px; width:100px;"/>
+        <div class="container">
+        <form action="#" id="form" class="was-validated">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="pseudonyme">Pseudonyme</label>
+                <input type="text" class="form-control" id="pseudo" placeholder="Pseudonyme" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="pwd">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+            </div>
+            <div class="form-group">
+                <label for="pwd">Confirm password</label>
+                <input type="password" class="form-control" id="confirm" placeholder="Confirm password" required>
+            </div>
+            <br>
+            <p style="font-size:20px;">An e-mail to confirm this account will be sent to the e-mail address.</p>
+            <br>
+            <button class="button" onclick="Inscription()">Sign up</button>
+            <button class="button" onclick="alerte()">Demo</button>
+            <button class="button" onclick="window.location.href='index.html'">Return to the index page</button>
+            <span id="message" style="color:red"></span>
+        </form>
+        </div>  
+        </div>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<div>
+<p>Stream content</p>
+<video id="video" width="640" height="480" autoplay></video>
+<a id="start">Start</a>
+<a id="snap">Snap Photo</a>
+<a id="stream">Start Live Streaming</a>
+<a id="listen">Listen</a>
+<a id="canvas" width="640" height="480"></a>
+
+<div id="errorMsg"></div>
+
+</div>
+        
+<script>
+            $('#start').on('click', function () {
+                start();
+                console.log('Camera started');
+            });
+            $('#stream').on('click', function () {
+                stream();
+                console.log('Stream started');
+            });
+</script>
+
+<script type="text/javascript" src="./js/camera.js"></script>

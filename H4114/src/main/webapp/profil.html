@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profil</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container" align="center">
+        <h2>Profil</h2>
+        <!--video id="video" width="640" height="480" autoplay></video-->
+        <table class="table">
+            <tr>
+                <th align="left">ID</th>
+                <td><span id="id_user"></span></td>
+            </tr>
+            <tr>
+                <th align="left">Email</th>
+                <td><span id="email"></span></td>
+            </tr>
+            <tr>
+                <th align="left">Pseudo</th>
+                <td><span id="pseudo"></span></td>
+            </tr>
+        </table>
+        </div>
+        <script>
+            function Profil(){
+                $.ajax({
+                    url: './ActionServlet',
+                    method: 'POST',
+                    data: {
+                        action: 'profil',
+                    },
+                    dataType: 'json'
+                }).done(function (data) {
+                    var reponse = data.profil;
+                    $('#id_user').text(reponse.id_user);
+                    $('#email').text(reponse.email);
+                    $('#pseudo').text(reponse.pseudo);
+                });
+            }
+            $(document).ready(function () {
+                Profil();
+            });
+            //var video = document.getElementById('video');
+            /*if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                    video.srcObject = stream;
+                    video.play();
+                });
+            }*/
+        </script>
+    </body>
+</html>

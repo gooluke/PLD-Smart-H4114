@@ -1,0 +1,51 @@
+<div>
+    <p>Map content</p>
+<p id="demo" style="height: 30px; width: 100%;"></p>
+<div id="map" style="height: 500px; width: 100%;"></div>
+
+</div>
+<script>
+	function initMap() {
+		var location = {lat: -25.363, lng: 131.044};
+		var map = new google.maps.Map(document.getElementById("map"), {
+			zoom: 4,
+			center: location
+		});
+		var marker = new google.maps.Marker({
+			position: location,
+			map: map
+		});
+		var marker2 = new google.maps.Marker({
+			position: {lat: -26.000, lng: 130.000},
+			map: map,
+			icon: { url: "./icons/man-user.png"}
+		});
+		var markerClose = new google.maps.Marker({
+			position: {lat: -25.3631, lng: 131.0441},
+			map: map,
+			icon: { url: "./icons/man-user.png"}
+		});
+		var markerClose = new google.maps.Marker({
+			position: {lat: -25.36301, lng: 131.04401},
+			map: map,
+			icon: { url: "./icons/man-user.png"}
+		});
+	}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyfR4HiGWGxQ7CiwH4VGEh0qjaL6LYv1M&callback=initMap">
+</script>
+
+<script>
+	var x = document.getElementById("demo");
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			x.innerHTML = "Geolocation is not supported by this browser.";
+		}
+	}
+
+	function showPosition(position) {
+		x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+	}
+</script> 
