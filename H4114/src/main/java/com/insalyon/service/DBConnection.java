@@ -76,6 +76,16 @@ public class DBConnection {
         return rs;
     }
     
+    public static int createRally(Connection conn, String rally, String description, 
+            String place, String date, String time, String radio, int moderator) throws SQLException{
+        
+        Statement stmt = conn.createStatement();
+        String value="'"+rally+"','"+description+"','"+place+"','"+date+"','"+time+"','"+radio+"','"+moderator+"'";
+        String sql = "insert ignore into rassemblements(rally,description,place,date,time,radio) values("+value+")";
+        int result = stmt.executeUpdate(sql);
+        return result;
+    }
+    
     public void close() {
         try {
             this.connection.close();
