@@ -10,8 +10,12 @@ function Connect(){
                         email: email,
                         password: password
                 },
-                dataType: 'json'
+                dataType: 'json',
+                error: function(){
+                    alert("Error while sending sign in request");
+                }
         }).done(function (data) {
+                alert("hey! I'm done with sign in");
                 var reponse = data.connect;
                 if (reponse.connect === "successful") {
                         window.location = "home.html";

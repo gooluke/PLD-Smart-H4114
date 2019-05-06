@@ -50,8 +50,12 @@ public class ActionServlet extends HttpServlet {
                     String password=request.getParameter("password");
                     JsonObject connection=new JsonObject();
                     JsonObject connect=new JsonObject();
-                    conn = DBConnection.Connection();
+                    DBConnection dbConnection = new DBConnection();
+                    conn = dbConnection.getConnection();
+                    System.out.println("I will do DBConnection.Connect");
                     boolean flag=DBConnection.Connect(email, password, conn);
+                    System.out.println("Well I finished DBConnection.Connect");
+                    dbConnection.close();
                     try (PrintWriter out = response.getWriter()) {
                         Gson gson=new GsonBuilder().setPrettyPrinting().create();
                         if(flag){
@@ -75,8 +79,12 @@ public class ActionServlet extends HttpServlet {
                     String pseudo=request.getParameter("pseudo");
                     String password=request.getParameter("password");
                     JsonObject inscription=new JsonObject();
-                    conn = DBConnection.Connection();
+                    DBConnection dbConnection = new DBConnection();
+                    conn = dbConnection.getConnection();
+                    System.out.println("I will do DBConnection.Inscription");
                     int resultInsert=DBConnection.Insert(conn,email,pseudo,password);
+                    System.out.println("Well I finished DBConnection.Inscription");
+                    dbConnection.close();
                     if(resultInsert!=-1){
                         try (PrintWriter out = response.getWriter()) {
                             Gson gson=new GsonBuilder().setPrettyPrinting().create();
@@ -96,8 +104,10 @@ public class ActionServlet extends HttpServlet {
                     PrintWriter out = response.getWriter();
                     Gson gson=new GsonBuilder().setPrettyPrinting().create();
                     ResultSet rs;
-                    conn = DBConnection.Connection();
+                    DBConnection dbConnection = new DBConnection();
+                    conn = dbConnection.getConnection();
                     rs = DBConnection.FindUserWithEmail(email, conn);
+                    dbConnection.close();
                     JsonObject jsonCompte=new JsonObject();
                     while (rs.next()){
                         jsonCompte.addProperty("id_user", rs.getString(1));
